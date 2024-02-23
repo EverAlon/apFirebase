@@ -28,12 +28,21 @@ ruta.get("/api/buscarUsuarioPorId/:id", async(req, res) => {
 });
  
 ruta.post("/api/editarUsuario",subirArchivoU(), async(req, res) => {
-    req.body.foto=req.file.originalname;
-    var error = await modificarUsuario(req.body);
-    if(error == 0)
-        res.status(200).json("Usuario Actualizado");
-    else
+
+    if (req.file!=undefined){
+        req.body.foto=req.file.originalname;
+    }
+    else{
+        req.body.foto = "algo"
+    }
+
+    var error=await modificarUsuario(req.body);
+    if(error==0){
+        res.status(200).json("Usuario actualizado");
+    }
+    else{
         res.status(400).json("Error al actualizar el usuario");
+    }
 });
   
 ruta.get("/api/borrarUsuario/:id", async(req, res) => {
