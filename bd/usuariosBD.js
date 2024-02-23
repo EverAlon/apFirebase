@@ -81,46 +81,9 @@ async function buscarPorID(id){
     return user;
 }
 
-/*async function modificarUsuario(datos){
-    var error=1;
-    var respuestaBuscar=await buscarPorID(datos.id);
-    console.log(respuestaBuscar);
-    if(respuestaBuscar!=undefined){
-        if(datos.foto=="algo"){
-            datos.foto=respuestaBuscar.foto;
-        }
-        console.log("------ password ------------");
-        console.log(datos.password);
-        datos.admin=respuestaBuscar.admin;
-        if(datos.password==""){
-            datos.password=datos.passwordViejo;
-            datos.salt=datos.saltViejo;
-        }
-        else{
-            var {salt, hash}=encriptarPassword(datos.password);
-            datos.password=hash;
-            datos.salt=salt;
-        }
-        var user=new Usuario(datos.id,datos);
-        if (user.bandera==0){
-            try{
-                await conexion.doc(user.id).set(user.obtenerDatos);
-                console.log("Usuario actualizado ");
-                error=0;
-            }
-            catch(err){
-                console.log("Error al modificar al usuario "+err);
-            }
-        }
-    }
-    return error;
-}*/
-
-
 async function modificarUsuario(datos){
     var error = 1;
     var usuario = await buscarPorID(datos.id);
-    console.log("::"+datos.password);
 
     if (datos.foto === "algo") {
         datos.foto = datos.fotoVieja;
@@ -130,10 +93,11 @@ async function modificarUsuario(datos){
     }    
     if (usuario != undefined) {
         datos.admin=usuario.admin;
-        if (datos.password === "") {
+        if (datos.password == "") {
             datos.password = datos.passwordViejo;
             datos.salt = datos.saltViejo;       
         } else {
+            console.log("entro al segundo: "+datos.password);
             var {salt,hash} = encriptarPassword(datos.password);
             datos.password = hash;
             datos.salt = salt;        

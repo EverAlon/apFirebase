@@ -34,12 +34,6 @@ function admin(req,res,cb){
     }
 }
 
-
-//var {salt,hash} = encriptarPassword("hola");
-//console.log(hash);
-//console.log(validarPassword("hola",hash,salt));
-
-
 module.exports = {
     encriptarPassword,
     validarPassword,

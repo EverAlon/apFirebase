@@ -28,7 +28,12 @@ ruta.get("/api/buscarProductoPorId/:id", async(req, res) => {
 });
   
 ruta.post("/api/editarProducto",subirArchivoP(), async(req, res) => {
-    req.body.foto=req.file.originalname;
+    if (req.file!=undefined){
+        req.body.foto=req.file.originalname;
+    }
+    else{
+        req.body.foto = "algo"
+    }
     var error = await modificarProducto(req.body);
     if(error == 0)
         res.status(200).json("Producto Actualizado");
